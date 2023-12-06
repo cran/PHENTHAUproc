@@ -1,0 +1,225 @@
+---
+title: "PHENTHAUproc"
+author: "Bachfischer, Lorenz"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{PHENTHAUproc}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+PHENTHAUproc is an early warning system, modelling the life cycle of oak processionary moth (OPM, Thaumetopoea processionea) with temperature data. It was created by Halbig et al. 2023[^1] at [FVA – Forest Research Institute Baden-Württemberg](https://www.fva-bw.de/en), Germany.
+
+The aim is to support practitioners in risk assessment and planning of measures. It consists of temperature-sum based models to predict the phenological development of OPM stages, bud swelling and leaf unfolding of oak (Quercus robur), the starvation-dependent mortality of OPM as well as the application period of possible plant protection agents (ppa) and biocides.
+
+This package implements the phenological models of PHENTHAUproc in R for local weather station data and spatial data, using the [terra](https://CRAN.R-project.org/package=terra) package created by Robert J. Hijmans.
+
+The models were developed, adjusted and tested using temperature data and OPM observation data from Brandenburg and Baden-Württemberg, Germany. Consider this in calculating OPM development in other regions.
+
+
+## Installation & setup
+
+PHENTHAUproc is available on CRAN.
+
+```{r, echo = T, message = F, warning = F}
+#install.packages("phenthau")
+library(PHENTHAUproc)
+
+# for presentation, additional packages are used:
+library(terra)
+library(tidyterra)
+library(ggplot2)
+library(geomtextpath)
+library(grDevices)
+```
+
+## Required data structure
+
+PHENTHAUproc works with temperature-sum based models. The calculation requires either daily mean, min and max air temperature in Celsius or hourly mean temperature. For local prognosis, a data frame with the columns date, tmean, tmin and tmax is required. For regional calculations, a named list of SpatRaster (tmean, tmin, tmax) with equal time attribute is needed.
+
+Weather station data and raster data for Germany can be found at [Climate Data Center](https://opendata.dwd.de/) of DWD (German Meteorological Service), the basis of our sample record. In our example, we use the spatial data of the hyras dataset near FVA. For local data, we use the temperature from the weather station of Freiburg im Breisgau from 2020.
+
+
+```{r, echo = T, message = F}
+# local data for PHENTHAUproc 
+freiburg_path <- system.file("extdata", "freiburg.csv", package  = "PHENTHAUproc", mustWork = TRUE)
+freiburg <- utils::read.csv(freiburg_path)
+
+head(freiburg)
+```
+
+
+```{r, echo = T, message = F}
+# spatial data for PHENTHAUproc
+tmean_path <- system.file("extdata", "fva_tmean.nc", package  = "PHENTHAUproc", mustWork = TRUE)
+tmax_path <- system.file("extdata", "fva_tmax.nc", package  = "PHENTHAUproc", mustWork = TRUE)
+tmin_path <- system.file("extdata", "fva_tmin.nc", package  = "PHENTHAUproc", mustWork = TRUE)
+
+fva <-  list(
+  tmean = terra::rast(tmean_path),
+  tmax = terra::rast(tmax_path),
+  tmin = terra::rast(tmin_path)
+)
+```
+
+## PHENTHAUproc
+
+### Calculation
+
+With the phenthau function, all model predictions are calculated. For a data frame input it will return a data frame with the computed start dates of the phenological events (like bud swelling, different larvae stages, etc.) or % for mortality. For spatial input, phenthau returns a list with SpatRaster. For more output information see: ?phenthau
+
+```{r, echo = T, message = F}
+local <- phenthau(freiburg)
+regional <- phenthau(fva)
+```
+
+### Results
+
+#### Oak phenology
+For oak phenology, bud swelling and leaf unfolding are calculated based on the work of Menzel 1997 [^2]. Bud swelling determines the feeding start of hatched OPM L1 larvae. Leaf unfolding sets the start of the possible ppa/biocide usage. Leaf unfolding can be calculated for Quercus robur with different parametrisations related to the oak clones from which phenology observation data for model creation were obtained (Menzel 1997 [^2]).
+
+#### L1 - hatch
+Hatch of OPM defines the beginning of the first larval stage L1. PHENTHAUproc includes three hatch models.
+
+- Custers 2003[^3]  
+- Meurisse et al. 2012[^4]  
+- Wagenhoff et al. 2014[^5]
+
+#### OPM - stages
+Hatch and bud swelling are starting the feeding period of OPM and the calculation of the further development stages:  
+- L2-L6 larval stages  
+- Pp Pupa  
+- Ad Adult  
+
+#### Ppa/biocide application period
+The possible application period for ppa/biocide starts with leaf unfolding of oak and ends with the beginning of the fourth larval stage (L4).
+
+#### Mortality
+The calculated mortality is the starvation-related mortality. It depends on the temperature sum during the period from OPM L1 hatching to oak bud swelling. This asynchrony can lead to mortality of the young larvae.
+
+
+## Presentation of local PHENTHAUproc
+
+Two graphs (currently only in English language) are available for local results and require ggplot2 and geomtextpath as additional packages. 
+
+```{r, echo = T, message = T}
+plot_station_step(local)
+plot_station(local, main = "PHENTHAUproc\nFreiburg")
+```
+
+
+## Presentation of regional PHENTHAUproc
+
+### Stages
+
+Stages is a SpatRaster with one layer per day and values from 0-8 for each development stage of OPM (see phenthau_legend() for assignment). The plot_stages function is a wrapper around terra::plot to preset categories and colors and subset the required date.
+
+```{r, echo = T, message = F}
+stages <- regional$stages
+
+plot_stages(stages,
+            time = "2020-06-05",
+            main = "Stages - 5. June",
+            axes = F)
+```
+
+### Mortality
+
+```{r, echo = T, message = T}
+# return mortality from list
+mo <- regional$mortality
+
+# get_legend returns a dataframe with ID, category and colors for a spatial PHENTHAUproc output
+leg <- get_legend("mortality")
+
+# set levels and colors for mortality
+levels(mo) <- leg[,c("ID", "category")]
+terra::coltab(mo) <- leg[,c("ID", "colors")]
+
+# plot mortality FVA 2020
+terra::plot(mo,
+            plg = list(title = "%"),
+            main = "Mortality",
+            all_levels = T,
+            axes = F)
+```
+## Examples
+
+### Example: Phenology of Quercus robur at Freiburg (FVA) in 2020
+
+Single phenological models can be calculated with the phenology function using different parametrisations (see parameter() for all preset parameters). Single parameter can directly be manipulated to compare phenological models.
+
+```{r, echo = T, message = F}
+# show possible models and parametrisation: parameter()
+leafunfolding <- phenology(fva,
+                           model = "leafunfolding",
+                           parametrisation = "quercus_robur_type1")
+
+# plot_date can be used to plot time serial numbers as raster values in SpatRaster and add the date format to the legend.
+plot_date(leafunfolding,
+          col = hcl.colors(50, "Greens 2"), 
+          main = "leaf unfolding",
+          axes = F)
+```
+
+### Example: Hatch at Freiburg (FVA) in 2020
+
+```{r, echo = T, message = F, warning = F}
+custers <- phenology(fva, model = "hatch", parametrisation = "custers")
+meurisse <- phenology(fva, model = "hatch", parametrisation = "meurisse")
+wagenhoff <- phenology(fva, model = "hatch", parametrisation = "wagenhoff")
+```
+
+```{r, echo = F, message = F, warning = F}
+hatch <- c(custers, meurisse, wagenhoff)
+names(hatch) <- c("custers", "meurisse", "wagenhoff")
+
+mi <- min(terra::minmax(hatch)["min",])
+ma <- max(terra::minmax(hatch)["max",])
+me <- round(mean(c(mi, ma)))
+
+ggplot() +
+  geom_spatraster(data = hatch) +
+  facet_wrap(~lyr, ncol = 3) +
+  scale_fill_whitebox_c(
+    palette = "deep",
+    labels = lubridate::as_date,
+    breaks = c(mi, me, ma),
+    guide = guide_colorbar(
+      direction = "horizontal",
+      title.position = "top",
+      barwidth = 20,
+      draw.ulim = 1,
+      draw.llim = 1
+    )
+  ) +
+  theme_bw() +
+  labs(fill = "hatchday") +
+  theme(legend.position = "bottom",
+        axis.text.x = element_blank(),
+        axis.text.y = element_blank())
+```
+
+### Example: Implementation with [leaflet](https://leafletjs.com/)
+
+![Implementation with leaflet](bw_example.png)
+
+
+
+[^1]: Halbig, P., Stelzer, A., Baier, P., Pennerstorfer, J., Delb, H., Schopf, A. 2023 PHENTHAUproc – An early warning and decision support system for hazard assessment and control of oak processionary moth (Thaumetopoea processionea) (submitted August 2023)    
+[^2]: Menzel, A. 1997 Phänologie von Waldbäumen unter sich ändernden Klimabedingungen - Auswertung der Beobachtungen in den Internationalen Phänologischen Gärten und Möglichkeiten der Modellierung von Phänodaten. Forstliche Forschungsberichte München, 164, 1-147.  
+[^3]: Custers, C.J.L. 2003 Climate change and trophic synchronisation - A casestudy of the Oak Processionary Caterpillar. Master's Thesis, Wageningen University.  
+[^4]: Meurisse, N., Hoch, G., Schopf, A., Battisti, A. and Grégoire, J.C. 2012 Low temperature tolerance and starvation ability of the oak processionary moth: implications in a context of increasing epidemics. Agricultural and Forest Entomology, 14, 239-250.  
+[^5]: Wagenhoff, E., Wagenhoff, A., Blum, R., Veit, H., Zapf, D. and Delb, H. 2014 Does the prediction of the time of egg hatch of Thaumetopoea processionea (Lepidoptera: Notodontidae) using a frost day/temperature sum model provide evidence of an increasing temporal mismatch between the time of egg hatch and that of budburst of Quercus robur due to recent global warming? European Journal of Entomology, 111, 207-215.
+
+
+\documentclass{article}
+
+

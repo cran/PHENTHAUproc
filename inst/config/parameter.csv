@@ -1,0 +1,23 @@
+"model","parametrisation","method","ts_start","ts_end","ts_prevyear","ldt","cf_dependent","cf_start","cf_end","cf_prevyear","cf_temp","cf_limit","hatch_dependent","set","a","b"
+"budswelling","quercus_robur_type1","tsum","-02-01","-09-30",FALSE,4,TRUE,"-11-01","-09-30",TRUE,"tmean",9,FALSE,"function(x, a, b){return(a+b*log(x))}",1316.6,-229.3
+"leafunfolding","quercus_robur_type1","tsum","-02-01","-09-30",FALSE,4,TRUE,"-11-01","-09-30",TRUE,"tmean",9,FALSE,"function(x, a, b){return(a+b*log(x))}",1747.9219,-298.3638
+"leafunfolding","quercus_robur_type2","tsum","-02-01","-09-30",FALSE,3,TRUE,"-11-01","-09-30",TRUE,"tmean",7,FALSE,"function(x, a, b){return(a+b*log(x))}",1704.7304,-286.2966
+"leafunfolding","quercus_petraea_original","tsum","-02-01","-09-30",FALSE,3,TRUE,"-11-01","-09-30",TRUE,"tmean",9,FALSE,"function(x, a, b){return(a+b*log(x))}",1740.8994,-282.1093
+"leafunfolding","quercus_petraea_modified","tsum","-02-01","-09-30",FALSE,2,TRUE,"-11-01","-09-30",TRUE,"tmean",10,FALSE,"function(x, a, b){return(a+b*log(x))}",1740.8994,-282.1093
+"hatch","custers","baskerville","-01-01","-09-30",FALSE,2.6,TRUE,"-12-01","-09-30",TRUE,"tmin",0,FALSE,"function(x, a, b){return(a+b*x)}",552.96,-3.753
+"hatch","wagenhoff","baskerville","-12-21","-09-30",TRUE,2.6,TRUE,"-09-01","-09-30",TRUE,"tmin",0,FALSE,"function(x, a, b){return(a+b*x)}",575.66,-3.327
+"hatch","meurisse","tsum","-02-01","-09-30",FALSE,6.6,FALSE,NA,NA,NA,NA,NA,FALSE,NA,81,NA
+"L2","degreedays","baskerville","-02-01","-09-30",FALSE,9.87,FALSE,NA,NA,NA,NA,NA,TRUE,NA,68.12,NA
+"L3","degreedays","baskerville","-02-01","-09-30",FALSE,9.42,FALSE,NA,NA,NA,NA,NA,TRUE,NA,129.48,NA
+"L4","degreedays","baskerville","-02-01","-09-30",FALSE,9.96,FALSE,NA,NA,NA,NA,NA,TRUE,NA,177.93,NA
+"L5","degreedays","baskerville","-02-01","-09-30",FALSE,10.11,FALSE,NA,NA,NA,NA,NA,TRUE,NA,246.57,NA
+"L6","degreedays","baskerville","-02-01","-09-30",FALSE,10.17,FALSE,NA,NA,NA,NA,NA,TRUE,NA,341.79,NA
+"Pp","degreedays","baskerville","-02-01","-09-30",FALSE,9.8,FALSE,NA,NA,NA,NA,NA,TRUE,NA,581.39,NA
+"Ad","degreedays","baskerville","-02-01","-09-30",FALSE,9.11,FALSE,NA,NA,NA,NA,NA,TRUE,NA,1088.55,NA
+"L2","hour","tsum","-02-01","-09-30",FALSE,9.87,FALSE,NA,NA,NA,NA,NA,TRUE,NA,1634.9,NA
+"L3","hour","tsum","-02-01","-09-30",FALSE,9.42,FALSE,NA,NA,NA,NA,NA,TRUE,NA,3107.49,NA
+"L4","hour","tsum","-02-01","-09-30",FALSE,9.96,FALSE,NA,NA,NA,NA,NA,TRUE,NA,4270.25,NA
+"L5","hour","tsum","-02-01","-09-30",FALSE,10.11,FALSE,NA,NA,NA,NA,NA,TRUE,NA,5917.68,NA
+"L6","hour","tsum","-02-01","-09-30",FALSE,10.17,FALSE,NA,NA,NA,NA,NA,TRUE,NA,8202.01,NA
+"Pp","hour","tsum","-02-01","-09-30",FALSE,9.8,FALSE,NA,NA,NA,NA,NA,TRUE,NA,13953.28,NA
+"Ad","hour","tsum","-02-01","-09-30",FALSE,9.11,FALSE,NA,NA,NA,NA,NA,TRUE,NA,26125.18,NA
