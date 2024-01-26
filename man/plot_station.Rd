@@ -12,7 +12,7 @@ plot_station(x, main = "PHENTHAUproc")
 \item{main}{title - character}
 }
 \value{
-A plot showing local 'PHENTHAUproc' results in a circle plot presentation.
+A plot showing local PHENTHAUproc results in a circle plot presentation.
 }
 \description{
 Plot local PHENTHAUproc in a circle plot
@@ -26,7 +26,7 @@ fr <- phenthau(fr_df)
 plot_station(fr)
 }
 \references{
-Allan Cameron https://stackoverflow.com/questions/71023419/is-it-possible-to-create-a-circular-timeline-plot-with-ggplot
+Allan Cameron 2022: Allan Cameron (2022), Answer to the question "Is it possible to create a circular timeline plot with ggplot?" on Stackoverflow, (\url{https://stackoverflow.com/questions/71023419/is-it-possible-to-create-a-circular-timeline-plot-with-ggplot})
 }
 \seealso{
 Other Plot: 

@@ -1,12 +1,13 @@
-#' Calculating starvation related mortality of Thaumetopoea processionea
+#' Calculating starvation related mortality of \emph{Thaumetopoea processionea}
 #'
 #' @param x SpatRaster list (tmean, tmax, tmin) - numeric - with time attribute
-#' @param par_budswelling character - parametrisation for bud swelling see parameter()
-#' @param par_hatch character - parametrisation for hatch see parameter()
+#' @param par_budswelling character - parametrisation for bud swelling
+#' @param par_hatch character - parametrisation for hatch
 #' @param def_hatch definition of hatch - character - either "first" or "mean"
-#' @param last If TRUE returns only the last day
+#' @param last If TRUE returns only the result for the last day. last row/layer for data.frame/SpatRaster
 #' @returns SpatRaster with mortality in %.
-#' @description Calculating starvation related mortality rate, dependent on degree days between the first hatch and feeding start (budswelling).
+#' @description Calculating the starvation-related mortality rate of L1 larvae, dependent on degree days from the first hatch to feeding start (bud swelling of the host tree \emph{Quercus robur}).
+#' All already available parameter settings can be shown with parameter().
 #' @family Main
 #' @export
 #' @examples
@@ -16,7 +17,7 @@
 #'}
 
 mortality <- function(x,
-                      par_budswelling = "quercus_robur_type1",
+                      par_budswelling = "quercus_robur_clone256_type1",
                       par_hatch = c("custers", "wagenhoff", "meurisse"),
                       def_hatch = "first",
                       last = TRUE) {

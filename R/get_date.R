@@ -7,7 +7,7 @@
 
 get_date <- function(year, monthday, prevyear = FALSE) {
 
-  if (!is.na(prevyear) && prevyear) year <- year - 1
+  year <- ifelse(prevyear, year - 1, year)
 
   day <- lubridate::as_date(
     lubridate::ymd(

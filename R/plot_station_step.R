@@ -1,7 +1,7 @@
 #' Plot local PHENTHAUproc in a step plot
 #'
 #' @param x output of phenthau - dataframe - local PHENTHAUproc
-#' @returns A plot showing local 'PHENTHAUproc' results in a stair step presentation.
+#' @returns A plot showing local PHENTHAUproc results in a step plot.
 #' @description Plots the development stages of OPM.
 #' @importFrom rlang .data
 #' @family Plot

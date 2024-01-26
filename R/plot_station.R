@@ -2,12 +2,15 @@
 #'
 #' @param x output of phenthau - dataframe - local PHENTHAUproc
 #' @param main title - character
-#' @returns A plot showing local 'PHENTHAUproc' results in a circle plot presentation.
+#' @returns A plot showing local PHENTHAUproc results in a circle plot presentation.
 #' @family Plot
 #' @importFrom stats na.omit
 #' @importFrom rlang .data
 #' @export
-#' @references Allan Cameron https://stackoverflow.com/questions/71023419/is-it-possible-to-create-a-circular-timeline-plot-with-ggplot
+#' @references
+#'
+#' Allan Cameron 2022: Allan Cameron (2022), Answer to the question "Is it possible to create a circular timeline plot with ggplot?" on Stackoverflow, (<https://stackoverflow.com/questions/71023419/is-it-possible-to-create-a-circular-timeline-plot-with-ggplot>)
+#'
 #' @examples
 #'
 #' # load daily test data from Freiburg

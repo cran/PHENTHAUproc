@@ -2,18 +2,18 @@
 % Please edit documentation in R/convert_dwd_to_phenthau.R
 \name{convert_dwd_to_phenthau}
 \alias{convert_dwd_to_phenthau}
-\title{Convert dwd temperature data to PHENTHAUproc input}
+\title{Convert hourly DWD temperature data to PHENTHAUproc input}
 \usage{
 convert_dwd_to_phenthau(x)
 }
 \arguments{
-\item{x}{filepath to dwd temperature data (hourly)}
+\item{x}{filepath to unzipped DWD temperature data (text file)}
 }
 \value{
-A dataframe with date, hour and tmean column.
+A dataframe with date, hour and mean air temperature (tmean).
 }
 \description{
-Convert dwd temperature data to PHENTHAUproc input
+Convert hourly DWD temperature data to PHENTHAUproc input
 }
 \seealso{
 Other Helper: 

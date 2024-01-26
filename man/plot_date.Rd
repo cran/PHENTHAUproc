@@ -22,7 +22,7 @@ A wrapper around terra::plot to show the time serial number as a character date 
 \examples{
 
 data <- load_test()
-budswelling <- phenology(data, "budswelling", "quercus_robur_type1", 2020)
+budswelling <- phenology(data, "budswelling", "quercus_robur_clone256_type1", 2020)
 plot_date(budswelling)
 }
 \seealso{

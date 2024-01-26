@@ -7,26 +7,59 @@
 parameter(model = NULL, parametrisation = NULL, year = NULL, first = TRUE)
 }
 \arguments{
-\item{model}{type of model for phenthau function - character}
+\item{model}{type of model for phenthau function - character - Either single model or model collection}
 
 \item{parametrisation}{type of parametrisation - character}
 
-\item{year}{year of prognosis - numeric - used to transform ts_start, ts_end, cf_start, cf_end to date format}
+\item{year}{year of prognosis - numeric - Default: actual year}
 
-\item{first}{logical - If TRUE and parametrisation is missing takes first in list}
+\item{first}{logical - If TRUE and parametrisation is missing first parametrisation in parameter() is used}
 }
 \value{
-If model or parametrisation or year is missing returns a dataframe of available parameter settings.
-If all are specified returns a list of parameter (used inside phenthau function).
+If none is specified returns a list of parameter (used inside phenthau function).
+Otherwise returns available parameter for given model, parametrisation & year
 }
 \description{
-See all available models and parametrisations: parameter()
-}
-\examples{
-# return parameter list
+See all available models with parameter: parameter()
+model can be a single model or a model collection described in "Default settings".
+Return a data.frame with all model options:
 parameter()
 
-# return all hatch model parameter
+\strong{Default Settings}
+
+The default parameter lists for different data input are:
+"dailymean": Regional PHENTHAUproc described in Halbig et al. 2024 for daily mean temperature data
+"hour": "Local PHENTHAUproc described in Halbig et al. 2024 for daily hourly temperature data
+"dailymeanminmax": PHENTHAUproc adapted to DWD Data for daily mean, min and max temperature data
+
+\strong{Columns}
+
+model: model
+parametrisation: parametrisation
+method: method used to calculate effective temperatures
+ts_start: first day to calculate effective temperatures
+ts_end last day to calculate effective temperatures (Default 30. Sept)
+ts_prevyear: If True calculation of effective temperatures starts in previous year. (i.e. wagenhoff)
+ldt: lower development threshold
+cf_dependent: Is model cold/frost dependent
+cf_start: first day to calculate cold/frost days
+cf_end: last day to calculate cold/frost days
+cf_prevyear:  If True calculation of cold/frost days starts in previous year.
+cf_temp: tmean" for cold days and "tmin" for frost days
+cf_limit: threshold for cold/frost days
+set: formula to calculate sum of effective temperatures
+a: parameter for set
+b: parameter for set
+}
+\examples{
+
+# Default parameter list for daily mean, min and max temperature data:
+parameter("dailymeanminmax")
+
+# overview dataframe with all available parameter sets
+parameter("all")
+
+# all hatch model parameter
 parameter("hatch")
 
 # return parameter necessary for calculation

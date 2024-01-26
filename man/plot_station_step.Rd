@@ -10,7 +10,7 @@ plot_station_step(x)
 \item{x}{output of phenthau - dataframe - local PHENTHAUproc}
 }
 \value{
-A plot showing local 'PHENTHAUproc' results in a stair step presentation.
+A plot showing local PHENTHAUproc results in a step plot.
 }
 \description{
 Plots the development stages of OPM.

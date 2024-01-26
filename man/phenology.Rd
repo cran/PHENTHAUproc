@@ -30,37 +30,40 @@ phenology(
 \item{...}{parameter to change default values. (i.e. ldt = 3.5)}
 }
 \value{
-If return_date is TRUE returns single layered SpatRaster with timeserialnumber (start day of phenological event).
-If return_date is FALSE returns a one layer per day SpatRaster logical with phenological event occured/not TRUE/FALSE.
+If return_date is TRUE returns single layered SpatRaster with time serial number (first occurence of phenological event).
+If return_date is FALSE returns a one layer per day SpatRaster type logical with phenological event occurred/not TRUE/FALSE.
 }
 \description{
-Using daily mean or min and max temperature data the function
-calculates the temperature dependent development stage of OPM or different
-phenological models like bud swelling or leaf unfolding of Quercus robur.
-Its using the models & model-parameters of Halbig et al. 202x. It follows
-4 different steps:
+Using daily mean or min and max temperature data, the function calculates the temperature-dependent development stages of OPM or the bud stages (bud swelling and leaf unfolding) of its host tree \emph{Quercus robur}.
+
+The default settings correspond to the model described by Halbig et al. 2024.
+Additional parametrizations are provided but have not yet been tested.
+
+Halbig et al. 2024
+It follows 4 different steps:
 \itemize{
-\item a) Calculating and Summing up cold days or frost days.
-(cold days are defined as days with a mean temp under ldt (lower
-development threshold) while frost days are all days with a min temperature
-under ldt)
-\item b) Hatch dependent development stages need a hatch raster (hatch
-happened 1 or not 0) for each day
-\item c) Calculating Degree Days with the
-single sine method of Baskerville and Emin, 1969
-\item d) Calculate the needed
-sum of effective temperatures for the development stage Comparing when the
-growing degree days(cumsum of degree days) is higher than the calculated
-threshold
+\item a) Calculating and summing up cold days or frost days.
+(Cold days are defined as days with a mean temperature below ldt (lower development threshold), while frost days are all days with a min temperature below ldt).
+Hatch dependent development stages need a hatch raster (hatch happened 1 or not 0) for each day
+\item b) Calculating degree days with the
+single sine method of Baskerville & Emin, 1969 or simple summing up tmean temperatures over ldt.
+\item c) Calculating the needed
+sum of effective temperatures for the development stage
+\item d) Comparing degree days with the needed sum of effective temperatures
 }
 }
 \examples{
 ## SpatRaster
 srl <- load_test()
 
-# calculate budswelling of quercus robur
-budswelling <- phenology(srl, "budswelling", "quercus_robur_type1", year = 2020)
+# Calculating bud swelling for our raster example
+budswelling <- phenology(srl, "budswelling", "quercus_robur_clone256_type1", year = 2020)
 
+}
+\references{
+Halbig et al. 2014: Halbig, P., Stelzer, A. S., Baier, P., Pennerstorfer, J., Delb, H., & Schopf, A. (2024). PHENTHAUproc–An early warning and decision support system for hazard assessment and control of oak processionary moth (Thaumetopoea processionea). Forest Ecology and Management, 552, 121525
+Baskerville & Emin 1969: Baskerville, G. L., & Emin, P. (1969). Rapid estimation of heat accumulation from maximum and minimum temperatures. Ecology, 50(3), 514-517. (\url{doi:10.2307/1933912})
+Menzel 1997: Menzel, A. (1997). Phänologie von Waldbäumen unter sich ändernden Klimabedingungen: Auswertung der Beobachtungen in den internationalen phänologischen Gärten und Möglichkeiten der Modellierung von Phänodaten. Frank.
 }
 \seealso{
 Other Main: 
@@ -70,7 +73,7 @@ Other Main:
 \code{\link{phenthau}()}
 }
 \author{
-Bachfischer Lorenz, Department forest protection FVA (2023)
+Bachfischer Lorenz, Department of Forest Protection FVA (2024)
 \email{lorenz.bachfischer@posteo.de}
 }
 \concept{Main}

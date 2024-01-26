@@ -1,15 +1,15 @@
-#' Plot regional 'PHENTHAUproc' - Stages
+#' Plot regional PHENTHAUproc - Stages
 #'
 #' @param x SpatRaster stages output of phenthau - numeric
-#' @param time day to plot - Date or ymd character
+#' @param time day to plot - Date or character year-month_day i.e.("2020-05-01")
 #' @param ... arguments passed along to terra::plot
-#' @returns A plot of the 'PHENTHAUproc' stages of the last/chosen time with preset levels and colors.
+#' @returns A plot of the PHENTHAUproc stages of the last/chosen time with preset levels and colors.
 #' @family Plot
 #' @description
-#' wrapper to plot stages of OPM with assigned names and colors
+#' A wrapper to plot the development stages of OPM with assigned names and colors
 #'
-#' @details phenthau returns a list of SpatRasters. The stages object is describing the development stages of oak processionary moth.
-#' This function plots the stages SpatRaster with the right names and colors. to see the assignment check get_legend("stages")
+#' @details phenthau returns a list of SpatRasters. The stages object is describes the development stages of oak processionary moth.
+#' This function plots the stages SpatRaster with the right names and colors. To get IDs, caregories and colors use get_legend("stages").
 #'
 #' @export
 

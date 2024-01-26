@@ -1,22 +1,56 @@
 #' Create parameter list
 #'
-#' @param model type of model for phenthau function - character
+#' @param model type of model for phenthau function - character - Either single model or model collection
 #' @param parametrisation type of parametrisation - character
-#' @param year year of prognosis - numeric - used to transform ts_start, ts_end, cf_start, cf_end to date format
-#' @param first logical - If TRUE and parametrisation is missing takes first in list
-#' @returns If model or parametrisation or year is missing returns a dataframe of available parameter settings.
-#' If all are specified returns a list of parameter (used inside phenthau function).
+#' @param year year of prognosis - numeric - Default: actual year
+#' @param first logical - If TRUE and parametrisation is missing first parametrisation in parameter() is used
+#' @returns
+#' If none is specified returns a list of parameter (used inside phenthau function).
+#' Otherwise returns available parameter for given model, parametrisation & year
 #' @family Main
 #' @description
 #'
-#' See all available models and parametrisations: parameter()
+#' See all available models with parameter: parameter()
+#' model can be a single model or a model collection described in "Default settings".
+#' Return a data.frame with all model options:
+#' parameter()
+#'
+#' \strong{Default Settings}
+#'
+#' The default parameter lists for different data input are:
+#' "dailymean": Regional PHENTHAUproc described in Halbig et al. 2024 for daily mean temperature data
+#' "hour": "Local PHENTHAUproc described in Halbig et al. 2024 for daily hourly temperature data
+#' "dailymeanminmax": PHENTHAUproc adapted to DWD Data for daily mean, min and max temperature data
+#'
+#' \strong{Columns}
+#'
+#' model: model
+#' parametrisation: parametrisation
+#' method: method used to calculate effective temperatures
+#' ts_start: first day to calculate effective temperatures
+#' ts_end last day to calculate effective temperatures (Default 30. Sept)
+#' ts_prevyear: If True calculation of effective temperatures starts in previous year. (i.e. wagenhoff)
+#' ldt: lower development threshold
+#' cf_dependent: Is model cold/frost dependent
+#' cf_start: first day to calculate cold/frost days
+#' cf_end: last day to calculate cold/frost days
+#' cf_prevyear:  If True calculation of cold/frost days starts in previous year.
+#' cf_temp: tmean" for cold days and "tmin" for frost days
+#' cf_limit: threshold for cold/frost days
+#' set: formula to calculate sum of effective temperatures
+#' a: parameter for set
+#' b: parameter for set
 #'
 #' @export
 #' @examples
-#' # return parameter list
-#' parameter()
 #'
-#' # return all hatch model parameter
+#' # Default parameter list for daily mean, min and max temperature data:
+#' parameter("dailymeanminmax")
+#'
+#' # overview dataframe with all available parameter sets
+#' parameter("all")
+#'
+#' # all hatch model parameter
 #' parameter("hatch")
 #'
 #' # return parameter necessary for calculation
@@ -25,56 +59,130 @@
 parameter <- function(model = NULL, parametrisation = NULL, year = NULL, first = TRUE) {
 
   # read parameter file
-  p <- utils::read.csv(system.file("config", "parameter.csv", package = "PHENTHAUproc", mustWork = TRUE))
+  p <- readRDS(system.file("config", "parameter.rds", package = "PHENTHAUproc", mustWork = TRUE))
 
-  # select one model
+  # show all parameter as a dataframe
   if (is.null(model)) return(p)
+  if (model == "all") return(p)
 
-  if (!model %in% p$model) stop(model, " has to be one of model parameter list. see parameter()")
+  # set year if not given
+  if (is.null(year)) {
 
-  p <- p[model == p$model,]
+    year <- as.numeric(format(Sys.Date(), "%Y"))
 
-  if (is.null(parametrisation)) {
+    warning(paste0("Year is set to actual year: ", year))
 
-    if (first) p <- p[1,] else return(p)
+  }
 
-  } else{
+  # give parameter for daily mean temperature data
+  if (model == "dailymean") {
 
-    p <- p[parametrisation == p$parametrisation,]
+    p <- rbind(
+      p[p$model == "budswelling" & p$parametrisation == "quercus_robur_clone256_type1" & p$method == "tsum",],
+      p[p$model == "leafunfolding" & p$parametrisation == "quercus_robur_clone256_type1" & p$method == "tsum",],
+      p[p$model == "hatch" & p$parametrisation == "meurisse" & p$method == "tsum",],
+      p[p$model == "L2" & p$parametrisation == "degreedays" & p$method == "tsum",],
+      p[p$model == "L3" & p$parametrisation == "degreedays" & p$method == "tsum",],
+      p[p$model == "L4" & p$parametrisation == "degreedays" & p$method == "tsum",],
+      p[p$model == "L5" & p$parametrisation == "degreedays" & p$method == "tsum",],
+      p[p$model == "L6" & p$parametrisation == "degreedays" & p$method == "tsum",],
+      p[p$model == "Pp" & p$parametrisation == "degreedays" & p$method == "tsum",],
+      p[p$model == "Ad" & p$parametrisation == "degreedays" & p$method == "tsum",]
+    )
+
+    # give parameter for hourly temperature data
+  } else if (model == "hour") {
+
+    p <- rbind(
+      p[p$model == "budswelling" & p$parametrisation == "quercus_robur_clone256_type1" & p$method == "tsum",],
+      p[p$model == "leafunfolding" & p$parametrisation == "quercus_robur_clone256_type1" & p$method == "tsum",],
+      p[p$model == "hatch" & p$parametrisation == "meurisse" & p$method == "tsum",],
+      p[p$model == "L2" & p$parametrisation == "hour" & p$method == "tsum",],
+      p[p$model == "L3" & p$parametrisation == "hour" & p$method == "tsum",],
+      p[p$model == "L4" & p$parametrisation == "hour" & p$method == "tsum",],
+      p[p$model == "L5" & p$parametrisation == "hour" & p$method == "tsum",],
+      p[p$model == "L6" & p$parametrisation == "hour" & p$method == "tsum",],
+      p[p$model == "Pp" & p$parametrisation == "hour" & p$method == "tsum",],
+      p[p$model == "Ad" & p$parametrisation == "hour" & p$method == "tsum",]
+    )
+
+    # give parameter for daily mean min and max temperature data
+  } else if (model == "dailymeanminmax") {
+
+    p <- rbind(
+      p[p$model == "budswelling" & p$parametrisation == "quercus_robur_clone256_type1" ,],
+      p[p$model == "leafunfolding" & p$parametrisation == "quercus_robur_clone256_type1",],
+      p[p$model == "hatch" & p$parametrisation == "custers" & p$method == "baskerville",],
+      p[p$model == "hatch" & p$parametrisation == "wagenhoff" & p$method == "baskerville",],
+      p[p$model == "hatch" & p$parametrisation == "meurisse" & p$method == "tsum",],
+      p[p$model == "L2" & p$parametrisation == "degreedays" & p$method == "baskerville",],
+      p[p$model == "L3" & p$parametrisation == "degreedays" & p$method == "baskerville",],
+      p[p$model == "L4" & p$parametrisation == "degreedays" & p$method == "baskerville",],
+      p[p$model == "L5" & p$parametrisation == "degreedays" & p$method == "baskerville",],
+      p[p$model == "L6" & p$parametrisation == "degreedays" & p$method == "baskerville",],
+      p[p$model == "Pp" & p$parametrisation == "degreedays" & p$method == "baskerville",],
+      p[p$model == "Ad" & p$parametrisation == "degreedays" & p$method == "baskerville",]
+    )
+
+  } else if (!model %in% p$model) {
+
+    stop(model, " has to be one of model parameter list. see parameter(model = \"all\")")
+
+  } else {
+
+    p <- p[model == p$model,]
+
+    if (is.null(parametrisation)) {
+
+      if (first) p <- p[1,] else return(p)
+
+    } else p <- p[parametrisation == p$parametrisation,]
 
   }
 
   if (nrow(p) == 0) stop("No model found for model = ", model, " and parametrisation = ", parametrisation, "!")
 
-  if (!is.null(year)) {
+  # stupid hack because of hatchmodel appears multiple times
+  listnames <- ifelse(p$model != "hatch", p$model, p$parametrisation)
 
-    if (!is.numeric(year)) stop("year has to be numeric.")
+  p <- split(p, listnames)
 
-    p$ts_start <- get_date(year, p$ts_start, p$ts_prevyear)
-    p$ts_end <- get_date(year, p$ts_end)
+  p <- lapply(p, function(x) {
 
-    if (p$cf_dependent) {
+    x$ts_start <- get_date(year, x$ts_start, x$ts_prevyear)
+    x$ts_end <- get_date(year, x$ts_end)
 
-      p$cf_start <- get_date(year, p$cf_start, p$cf_prevyear)
-      p$cf_end <- get_date(year, p$cf_end)
+    if (x$cf_dependent) {
+
+      x$cf_start <- get_date(year, x$cf_start, x$cf_prevyear)
+      x$cf_end <- get_date(year, x$cf_end)
+
+    } else {
+
+      x$cf_start <- NULL
+      x$cf_end <- NULL
+      x$cf_temp <- NULL
+      x$cf_limit <- NULL
 
     }
 
-    p$ts_prevyear <- NULL
-    p$cf_prevyear <- NULL
+    x$ts_prevyear <- NULL
+    x$cf_prevyear <- NULL
 
-    }
+    x <- as.list(x)
 
-  if (nrow(p) == 1) {
+    if (is.na(x$set)) x$set <- NA else x$set <- eval(parse(text = paste0(x$set)))
 
-    p <- as.list(p)
-    p$set <- eval(parse(text = paste0(p$set)))
+    return(x)
 
   }
+  )
 
   return(p)
 
 }
+
+
 
 
 
