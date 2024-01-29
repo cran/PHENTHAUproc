@@ -1,4 +1,4 @@
-abaaa18afb65075bc9630ad247d48f31 *DESCRIPTION
+1bba4680024ede820d7388858f782c04 *DESCRIPTION
 53a6ea867b7d331c26ff81b5282cdaa6 *LICENSE
 f683712b3247b2a824393f3770174fa6 *NAMESPACE
 32111957d414492392a46145c733f074 *NEWS.md
@@ -80,7 +80,8 @@ fed8a387fba1e90987db51b9d844755f *man/load_test.Rd
 842a932184f448a44a663f5b4ff4066c *man/load_test_day.Rd
 eabef4c848f6e1376ec309e89a8cd110 *man/load_test_hour.Rd
 5ce90b4c4ed35adba8be57bcd12739bb *man/load_test_srl.Rd
-bc9dd7f8282df838656f97760566cfc4 *man/local.Rd
+62c5d6aa805f6a19c5cc4ac92e51fa4e *man/local_daily.Rd
+88c5d1435ef14cb5c30ece56da9df223 *man/local_hourly.Rd
 9830fceb8a4db2fddb8c9c83ed999455 *man/mortality.Rd
 3cf40fbeb4e9e4030fda0d4531b80a1d *man/parameter.Rd
 565568c5a6c5f6967633af9409b093f1 *man/phenology.Rd
