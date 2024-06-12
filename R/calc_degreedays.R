@@ -4,7 +4,8 @@
 #' @param ts_start start of timeseries - Date
 #' @param ts_end end of timeseries - Date
 #' @param ldt lower development threshold - numeric
-#' @param method name of degreedays/temperature sum method - character - either "baskerville" or "tsum"
+#' @param method name of degreedays/temperature sum method - character - either
+#' "baskerville" or "tsum"
 #' @family Models
 #' @keywords internal
 #' @returns SpatRaster of growing (summed up) degree days.
@@ -36,7 +37,8 @@ calc_degreedays <- function(x,
 
   names(degree_days) <- timename(degree_days, "degreedays")
 
-  # we need the summed up degree days for comparision with sum of effective temperatures
+  # we need the summed up degree days for comparision with sum of effective
+  # temperatures
 
   return(degree_days)
 

@@ -10,7 +10,9 @@ get_time(x)
 \item{x}{SpatRaster, data.frame, list of SpatRaster or SpatRasterDataset}
 }
 \value{
-If x is a data.frame returns the time column, else it returns the time attribute of a SpatRaster or the shared time attribute of multiple SpatRaster.
+If x is a data.frame returns the time column, else it returns the
+time attribute of a SpatRaster or the shared time attribute of multiple
+SpatRaster.
 }
 \description{
 Get time attribute

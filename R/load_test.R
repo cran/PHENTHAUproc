@@ -1,6 +1,6 @@
 #' Load test data
 #'
-#' @param type character, either day/hour/SpatRaster
+#' @param type character, either day/hour/SpatRaster/SpatRaster_hour/budswelling
 #' @returns data.frame/SpatRaster list with test data
 #' @family Helper
 #' @export
@@ -8,11 +8,14 @@
 
 load_test <- function(type = "SpatRaster") {
 
-  if (type == "day") td <- load_test_day()
-  if (type == "hour") td <- load_test_hour()
-  if (type == "SpatRaster") td <- load_test_srl()
+  if (type == "day") return(load_test_day())
+  if (type == "hour") return(load_test_hour())
+  if (type == "SpatRaster") return(load_test_srl())
+  if (type == "SpatRaster_hour") return(load_test_srl_hour())
+  if (type == "budswelling") return(load_test_bs())
 
-  return(td)
+  stop("testfile with name ", type, " not found.")
+
 }
 
 
@@ -59,6 +62,24 @@ load_test_srl <- function() {
 }
 
 
+#' load SpatRaster - hourly - 16 Rasterpoints around FVA 2022 - 2023
+#' @keywords internal
 
+load_test_srl_hour <- function() {
+
+  thour <- terra::rast(system.file("extdata", "fva_hour.nc", package = "PHENTHAUproc", mustWork = TRUE))
+
+  return(thour)
+}
+
+#' load SpatRaster - budswelling - day of year - 16 Rasterpoints around FVA 2023
+#' @keywords internal
+
+load_test_bs <- function() {
+
+  bs <- terra::rast(system.file("extdata", "fva_bs.nc", package = "PHENTHAUproc", mustWork = TRUE))
+
+  return(bs)
+}
 
 

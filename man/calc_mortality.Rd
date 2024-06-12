@@ -7,13 +7,15 @@
 calc_mortality(x, budswelling, hatch, mot = 0)
 }
 \arguments{
-\item{x}{SpatRaster list / dataframe with temperature data and time attribute/column}
+\item{x}{SpatRaster list / dataframe with temperature data and time
+attribute/column}
 
 \item{budswelling}{SpatRaster - logical - T/F budswelling/no_budswelling}
 
 \item{hatch}{SpatRaster - logical - T/F hatch/no_hatch}
 
-\item{mot}{mortality threshold - numeric - is used as lower development threshold calculating degree days}
+\item{mot}{mortality threshold - numeric - is used as lower development
+threshold calculating degree days}
 }
 \value{
 SpatRaster of starving related mortality in \%.

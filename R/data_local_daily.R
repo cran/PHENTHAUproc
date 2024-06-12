@@ -1,6 +1,7 @@
 #' Local daily Weather Station data from Freiburg
 #'
-#' A dataset containing daily mean, max and min temperatures for Freiburg from 2019-09-01 to 2020-09-30.
+#' A dataset containing daily mean, max and min temperatures for Freiburg from
+#' 2019-09-01 to 2020-09-30.
 #' Downloaded from opendata.dwd.de and preprocessed.
 #'
 #' The dataset can be loaded using load_test("day").

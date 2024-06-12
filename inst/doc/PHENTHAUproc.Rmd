@@ -35,7 +35,6 @@ library(PHENTHAUproc)
 library(terra)
 library(tidyterra)
 library(ggplot2)
-library(geomtextpath)
 library(grDevices)
 ```
 
@@ -73,15 +72,16 @@ fva
 With the phenthau function, all model predictions are calculated. For a data frame input, it will return a data frame with the computed start dates of the phenological events (like bud swelling, different larval stages, etc.) or % for OPM L1 larval mortality. For a SpatRasterlist input, phenthau returns a SpatRasterlist. The output will always be limited from 1. February to 30. September. For more output information see: ?phenthau
 
 ```{r, echo = T, message = F}
-# phenthau chooses parameter sets dependent on the input
-local <- phenthau(freiburg)
+# The parameter default method is "dailymeanminmax". If you want to calculate with hourly data, you have to change the parameter manually.
 regional <- phenthau(fva)
+local <- phenthau(freiburg, params = parameter("hour", year = 2020))
 
-# we can also preset the parameters.
-params <- parameter("dailymeanminmax", year = 2020) # returns parameter set for daily mean min max temperatures
+# we can create a parameter list
+params <- parameter("dailymeanminmax", year = 2020)
 
-# and change them
+# and change single parameter
 params$budswelling$ldt <- 5 # change lower development threshold for budswelling from Default to 5
+
 regional_manipulated <- phenthau(fva, params = params)
 
 rm(params, regional_manipulated)
@@ -115,11 +115,10 @@ The starvation-related mortality is calculated. It depends on the temperature su
 
 ## Presentation of local PHENTHAUproc
 
-Two graphs (currently only in English language) are available for local results and require ggplot2 and geomtextpath as additional packages. 
+One graph (currently only in English language) is available for local results and requires ggplot2. 
 
 ```{r, echo = T, out.width = "100%", fig.dim = c(8, 6), message = T}
 plot_station_step(local)
-plot_station(local, main = "PHENTHAUproc\nFreiburg")
 ```
 
 
@@ -134,7 +133,7 @@ stages <- regional$stages
 
 plot_stages(stages,
             time = "2020-06-05",
-            main = "OPM larval stages - 5. June 2020",
+            main = "OPM 5. June 2020",
             axes = F,
             box = T)
 ```

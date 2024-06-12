@@ -4,7 +4,9 @@
 #' @returns SpatRaster - logical - with time attribute
 #' @family Calculation
 #' @keywords internal
-#' @description Takes multiple logical SpatRasters with time attribute and returns SpatRaster with the mean time serial number of first and last TRUE value.
+#' @description Takes multiple logical SpatRasters with time attribute and
+#' returns SpatRaster with the mean time serial number of first and last TRUE
+#' value.
 
 calc_mean <- function(x) {
 

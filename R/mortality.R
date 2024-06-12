@@ -4,9 +4,12 @@
 #' @param par_budswelling character - parametrisation for bud swelling
 #' @param par_hatch character - parametrisation for hatch
 #' @param def_hatch definition of hatch - character - either "first" or "mean"
-#' @param last If TRUE returns only the result for the last day. last row/layer for data.frame/SpatRaster
+#' @param last If TRUE returns only the result for the last day. last row/layer
+#' for data.frame/SpatRaster
 #' @returns SpatRaster with mortality in %.
-#' @description Calculating the starvation-related mortality rate of L1 larvae, dependent on degree days from the first hatch to feeding start (bud swelling of the host tree \emph{Quercus robur}).
+#' @description Calculating the starvation-related mortality rate of L1 larvae,
+#' dependent on degree days from the first hatch to feeding start (bud swelling
+#' of the host tree \emph{Quercus robur}).
 #' All already available parameter settings can be shown with parameter().
 #' @family Main
 #' @export

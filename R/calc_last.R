@@ -1,10 +1,12 @@
 #' Calculate last TRUE
 #'
 #' @param x SpatRaster - logical - with time attribute
-#' @returns SpatRaster with time serial number (origin = lubridate::origin) of last TRUE layer.
+#' @returns SpatRaster with time serial number (origin = lubridate::origin) of
+#' last TRUE layer.
 #' @family Calculation
 #' @keywords internal
-#' @description Takes multiple logical SpatRasters with time attribute and returns SpatRaster with time serial number of last TRUE layer time.
+#' @description Takes multiple logical SpatRasters with time attribute and
+#' returns SpatRaster with time serial number of last TRUE layer time.
 
 calc_last <- function(x) {
 

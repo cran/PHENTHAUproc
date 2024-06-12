@@ -7,30 +7,38 @@
 parameter(model = NULL, parametrisation = NULL, year = NULL, first = TRUE)
 }
 \arguments{
-\item{model}{type of model for phenthau function - character - Either single model or model collection}
+\item{model}{type of model for phenthau function - character - Either single
+model or model collection}
 
 \item{parametrisation}{type of parametrisation - character}
 
 \item{year}{year of prognosis - numeric - Default: actual year}
 
-\item{first}{logical - If TRUE and parametrisation is missing first parametrisation in parameter() is used}
+\item{first}{logical - If TRUE and parametrisation is missing first
+parametrisation in parameter() is used}
 }
 \value{
-If none is specified returns a list of parameter (used inside phenthau function).
-Otherwise returns available parameter for given model, parametrisation & year
+If no argument is specified returns a list of parameter (used inside phenthau
+function).
+Otherwise returns available parameter for given model, parametrisation and
+year
 }
 \description{
 See all available models with parameter: parameter()
-model can be a single model or a model collection described in "Default settings".
+model can be a single model or a model collection described in "Default
+settings".
 Return a data.frame with all model options:
 parameter()
 
 \strong{Default Settings}
 
 The default parameter lists for different data input are:
-"dailymean": Regional PHENTHAUproc described in Halbig et al. 2024 for daily mean temperature data
-"hour": "Local PHENTHAUproc described in Halbig et al. 2024 for daily hourly temperature data
-"dailymeanminmax": PHENTHAUproc adapted to DWD Data for daily mean, min and max temperature data
+"dailymean": Regional PHENTHAUproc described in Halbig et al. 2024 for daily
+mean temperature data
+"hour": "Local PHENTHAUproc described in Halbig et al. 2024 for daily hourly
+temperature data
+"dailymeanminmax": PHENTHAUproc adapted to DWD Data for daily mean, min and
+max temperature data
 
 \strong{Columns}
 
@@ -39,7 +47,8 @@ parametrisation: parametrisation
 method: method used to calculate effective temperatures
 ts_start: first day to calculate effective temperatures
 ts_end last day to calculate effective temperatures (Default 30. Sept)
-ts_prevyear: If True calculation of effective temperatures starts in previous year. (i.e. wagenhoff)
+ts_prevyear: If True calculation of effective temperatures starts in previous
+year. (i.e. wagenhoff)
 ldt: lower development threshold
 cf_dependent: Is model cold/frost dependent
 cf_start: first day to calculate cold/frost days

@@ -15,7 +15,8 @@ phenology(
 )
 }
 \arguments{
-\item{x}{SpatRaster list/dataframe (tmean, tmax, tmin) - numeric - with time attribute/date column}
+\item{x}{SpatRaster list/dataframe (tmean, tmax, tmin) - numeric - with time
+attribute/date column}
 
 \item{model}{name of model - character}
 
@@ -23,18 +24,24 @@ phenology(
 
 \item{year}{year for prognosis - numeric}
 
-\item{hatch}{SpatRaster - logical - with time attribute TRUE/FALSE hatch/no_hatch}
+\item{hatch}{SpatRaster - logical - with time attribute TRUE/FALSE
+hatch/no_hatch}
 
-\item{return_date}{returns start of phenological event with time serial number}
+\item{return_date}{TRUE/FALSE defines output -> see value}
 
 \item{...}{parameter to change default values. (i.e. ldt = 3.5)}
 }
 \value{
-If return_date is TRUE returns single layered SpatRaster with time serial number (first occurence of phenological event).
-If return_date is FALSE returns a one layer per day SpatRaster type logical with phenological event occurred/not TRUE/FALSE.
+If return_date is TRUE returns single layered SpatRaster with time
+serial number (first occurence of phenological event).
+If return_date is FALSE returns a one layer per day SpatRaster type logical
+with phenological event occurred/not TRUE/FALSE.
 }
 \description{
-Using daily mean or min and max temperature data, the function calculates the temperature-dependent development stages of OPM or the bud stages (bud swelling and leaf unfolding) of its host tree \emph{Quercus robur}.
+Using daily mean or min and max temperature data, the function
+calculates the temperature-dependent development stages of OPM or the bud
+stages (bud swelling and leaf unfolding) of its host tree
+\emph{Quercus robur}.
 
 The default settings correspond to the model described by Halbig et al. 2024.
 Additional parametrizations are provided but have not yet been tested.
@@ -43,10 +50,14 @@ Halbig et al. 2024
 It follows 4 different steps:
 \itemize{
 \item a) Calculating and summing up cold days or frost days.
-(Cold days are defined as days with a mean temperature below ldt (lower development threshold), while frost days are all days with a min temperature below ldt).
-Hatch dependent development stages need a hatch raster (hatch happened 1 or not 0) for each day
+(Cold days are defined as days with a mean temperature below ldt
+(lower development threshold), while frost days are all days with a min
+temperature below ldt).
+Hatch dependent development stages need a hatch raster (hatch happened
+1 or not 0) for each day
 \item b) Calculating degree days with the
-single sine method of Baskerville & Emin, 1969 or simple summing up tmean temperatures over ldt.
+single sine method of Baskerville & Emin, 1969 or simple summing up tmean
+temperatures over ldt.
 \item c) Calculating the needed
 sum of effective temperatures for the development stage
 \item d) Comparing degree days with the needed sum of effective temperatures
@@ -57,13 +68,24 @@ sum of effective temperatures for the development stage
 srl <- load_test()
 
 # Calculating bud swelling for our raster example
-budswelling <- phenology(srl, "budswelling", "quercus_robur_clone256_type1", year = 2020)
+budswelling <- phenology(srl,
+                         model = "budswelling",
+                         parametrisation = "quercus_robur_clone256_type1",
+                         year = 2020)
 
 }
 \references{
-Halbig et al. 2014: Halbig, P., Stelzer, A. S., Baier, P., Pennerstorfer, J., Delb, H., & Schopf, A. (2024). PHENTHAUproc–An early warning and decision support system for hazard assessment and control of oak processionary moth (Thaumetopoea processionea). Forest Ecology and Management, 552, 121525
-Baskerville & Emin 1969: Baskerville, G. L., & Emin, P. (1969). Rapid estimation of heat accumulation from maximum and minimum temperatures. Ecology, 50(3), 514-517. (\url{doi:10.2307/1933912})
-Menzel 1997: Menzel, A. (1997). Phänologie von Waldbäumen unter sich ändernden Klimabedingungen: Auswertung der Beobachtungen in den internationalen phänologischen Gärten und Möglichkeiten der Modellierung von Phänodaten. Frank.
+Halbig et al. 2014: Halbig, P., Stelzer, A. S., Baier, P., Pennerstorfer,
+J., Delb, H., & Schopf, A. (2024). PHENTHAUproc–An early warning and decision
+support system for hazard assessment and control of oak processionary moth
+(Thaumetopoea processionea). Forest Ecology and Management, 552, 121525 \cr
+Baskerville & Emin 1969: Baskerville, G. L., & Emin, P. (1969). Rapid
+estimation of heat accumulation from maximum and minimum temperatures.
+Ecology, 50(3), 514-517. (\url{doi:10.2307/1933912}) \cr
+Menzel 1997: Menzel, A. (1997). Phänologie von Waldbäumen unter sich
+ändernden Klimabedingungen: Auswertung der Beobachtungen in den
+internationalen phänologischen Gärten und Möglichkeiten der Modellierung von
+Phänodaten. Frank. \cr
 }
 \seealso{
 Other Main: 

@@ -13,7 +13,8 @@ calc_first(...)
 SpatRaster - logical - with time attribute
 }
 \description{
-Takes multiple logical SpatRasters with time attribute and returns SpatRaster with common time and TRUE if any SpatRaster is TRUE.
+Takes multiple logical SpatRasters with time attribute and
+returns SpatRaster with common time and TRUE if any SpatRaster is TRUE.
 }
 \seealso{
 Other Calculation: 

@@ -13,7 +13,9 @@ calc_mean(x)
 SpatRaster - logical - with time attribute
 }
 \description{
-Takes multiple logical SpatRasters with time attribute and returns SpatRaster with the mean time serial number of first and last TRUE value.
+Takes multiple logical SpatRasters with time attribute and
+returns SpatRaster with the mean time serial number of first and last TRUE
+value.
 }
 \seealso{
 Other Calculation: 

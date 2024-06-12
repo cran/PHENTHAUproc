@@ -1,6 +1,7 @@
 #' Local hourly Weather Station data from Freiburg
 #'
-#' A dataset containing hourly temperatures for Freiburg from 2019-09-01 to 2022-12-31.
+#' A dataset containing hourly temperatures for Freiburg from 2019-09-01 to
+#' 2022-12-31.
 #' Downloaded from opendata.dwd.de and preprocessed.
 #'
 #' The dataset can be loaded using load_test("hour").

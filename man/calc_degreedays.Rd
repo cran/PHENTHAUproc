@@ -15,7 +15,8 @@ calc_degreedays(x, ts_start, ts_end, ldt, method)
 
 \item{ldt}{lower development threshold - numeric}
 
-\item{method}{name of degreedays/temperature sum method - character - either "baskerville" or "tsum"}
+\item{method}{name of degreedays/temperature sum method - character - either
+"baskerville" or "tsum"}
 }
 \value{
 SpatRaster of growing (summed up) degree days.

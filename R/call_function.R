@@ -1,7 +1,8 @@
 #' Call a function from PHENTHAUproc package
 #'
 #' @param f function
-#' @param data SpatRaster list (tmean, tmax, tmin) - numeric - with time attribute
+#' @param data SpatRaster list (tmean, tmax, tmin) - numeric - with time
+#' attribute
 #' @param params parameter list
 #' @family Helper
 #' @keywords internal

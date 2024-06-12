@@ -7,7 +7,7 @@
 load_test(type = "SpatRaster")
 }
 \arguments{
-\item{type}{character, either day/hour/SpatRaster}
+\item{type}{character, either day/hour/SpatRaster/SpatRaster_hour/budswelling}
 }
 \value{
 data.frame/SpatRaster list with test data

@@ -10,7 +10,8 @@ convert_df_to_srl(x, date_col = "date")
 \item{x}{dataframe (tmean, tmax, tmin, date)}
 
 \item{date_col}{\itemize{
-\item character - name for date column which will be used to create time attribute of SpatRaster.
+\item character - name for date column which will be used to
+create time attribute of SpatRaster.
 }}
 }
 \value{
@@ -20,7 +21,8 @@ SpatRaster list (tmean, tmax, tmin) - numeric - with time attribute
 Internal function to create a SpatRaster list out of a dataframe.
 
 By default the dataframe should have a date column called "date".
-The function is transferring each column into a list object and this object to a 1 col, 1 row nrow nlyr SpatRaster.
+The function is transferring each column into a list object and this object
+to a 1 col, 1 row nrow nlyr SpatRaster.
 }
 \seealso{
 Other SpatRaster transformation: 

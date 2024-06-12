@@ -15,11 +15,14 @@ calc_phenology(x, params)
 SpatRaster - logical - with event occurred/not TRUE/FALSE
 }
 \description{
-This function is checking the dependencies of the model and dependent on them:
+This function is checking the dependencies of the model and
+dependent on them:
 
-1 Calculate the needed sum of effective (SET) temperatures for the phenological event to happen
+1 Calculate the needed sum of effective (SET) temperatures for the
+phenological event to happen
 2 Calculate the summed degree days (depending on hatch or not)
-3 Check if the summed degree days have reached the needed sum of effective temperatures
+3 Check if the summed degree days have reached the needed sum of effective
+temperatures
 }
 \seealso{
 Other Models: 

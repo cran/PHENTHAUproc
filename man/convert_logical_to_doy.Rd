@@ -10,18 +10,22 @@ convert_logical_to_doy(x, from = NULL, to = NULL)
 \item{x}{SpatRaster - logical - with time attribute}
 
 \item{from}{\itemize{
-\item Date - ymd - only if SpatRaster should be subset before being transformed.
+\item Date - ymd - only if SpatRaster should be subset before being
+transformed.
 }}
 
 \item{to}{\itemize{
-\item Date - ymd - only if SpatRaster should be subset before being transformed.
+\item Date - ymd - only if SpatRaster should be subset before being
+transformed.
 }}
 }
 \value{
 SpatRaster - numeric - day of year
 }
 \description{
-Converts logical SpatRaster with time attribute and one layer per day to single layer with the day of the year (doy) where the layer is 1/TRUE first.
+Converts logical SpatRaster with time attribute and one layer
+per day to single layer with the day of the year (doy) where the layer is
+1/TRUE first.
 }
 \seealso{
 Other SpatRaster transformation: 

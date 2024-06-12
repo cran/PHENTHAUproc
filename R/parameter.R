@@ -1,26 +1,34 @@
 #' Create parameter list
 #'
-#' @param model type of model for phenthau function - character - Either single model or model collection
+#' @param model type of model for phenthau function - character - Either single
+#' model or model collection
 #' @param parametrisation type of parametrisation - character
 #' @param year year of prognosis - numeric - Default: actual year
-#' @param first logical - If TRUE and parametrisation is missing first parametrisation in parameter() is used
+#' @param first logical - If TRUE and parametrisation is missing first
+#' parametrisation in parameter() is used
 #' @returns
-#' If none is specified returns a list of parameter (used inside phenthau function).
-#' Otherwise returns available parameter for given model, parametrisation & year
+#' If no argument is specified returns a list of parameter (used inside phenthau
+#' function).
+#' Otherwise returns available parameter for given model, parametrisation and
+#' year
 #' @family Main
 #' @description
 #'
 #' See all available models with parameter: parameter()
-#' model can be a single model or a model collection described in "Default settings".
+#' model can be a single model or a model collection described in "Default
+#' settings".
 #' Return a data.frame with all model options:
 #' parameter()
 #'
 #' \strong{Default Settings}
 #'
 #' The default parameter lists for different data input are:
-#' "dailymean": Regional PHENTHAUproc described in Halbig et al. 2024 for daily mean temperature data
-#' "hour": "Local PHENTHAUproc described in Halbig et al. 2024 for daily hourly temperature data
-#' "dailymeanminmax": PHENTHAUproc adapted to DWD Data for daily mean, min and max temperature data
+#' "dailymean": Regional PHENTHAUproc described in Halbig et al. 2024 for daily
+#' mean temperature data
+#' "hour": "Local PHENTHAUproc described in Halbig et al. 2024 for daily hourly
+#' temperature data
+#' "dailymeanminmax": PHENTHAUproc adapted to DWD Data for daily mean, min and
+#' max temperature data
 #'
 #' \strong{Columns}
 #'
@@ -29,7 +37,8 @@
 #' method: method used to calculate effective temperatures
 #' ts_start: first day to calculate effective temperatures
 #' ts_end last day to calculate effective temperatures (Default 30. Sept)
-#' ts_prevyear: If True calculation of effective temperatures starts in previous year. (i.e. wagenhoff)
+#' ts_prevyear: If True calculation of effective temperatures starts in previous
+#' year. (i.e. wagenhoff)
 #' ldt: lower development threshold
 #' cf_dependent: Is model cold/frost dependent
 #' cf_start: first day to calculate cold/frost days
@@ -70,16 +79,14 @@ parameter <- function(model = NULL, parametrisation = NULL, year = NULL, first =
 
     year <- as.numeric(format(Sys.Date(), "%Y"))
 
-    warning(paste0("Year is set to actual year: ", year))
-
   }
 
   # give parameter for daily mean temperature data
   if (model == "dailymean") {
 
     p <- rbind(
-      p[p$model == "budswelling" & p$parametrisation == "quercus_robur_clone256_type1" & p$method == "tsum",],
-      p[p$model == "leafunfolding" & p$parametrisation == "quercus_robur_clone256_type1" & p$method == "tsum",],
+      p[p$model == "budswelling" & p$parametrisation == "quercus_robur_clone256_type1",],
+      p[p$model == "leafunfolding" & p$parametrisation == "quercus_robur_clone256_type1",],
       p[p$model == "hatch" & p$parametrisation == "meurisse" & p$method == "tsum",],
       p[p$model == "L2" & p$parametrisation == "degreedays" & p$method == "tsum",],
       p[p$model == "L3" & p$parametrisation == "degreedays" & p$method == "tsum",],
@@ -94,16 +101,18 @@ parameter <- function(model = NULL, parametrisation = NULL, year = NULL, first =
   } else if (model == "hour") {
 
     p <- rbind(
-      p[p$model == "budswelling" & p$parametrisation == "quercus_robur_clone256_type1" & p$method == "tsum",],
-      p[p$model == "leafunfolding" & p$parametrisation == "quercus_robur_clone256_type1" & p$method == "tsum",],
-      p[p$model == "hatch" & p$parametrisation == "meurisse" & p$method == "tsum",],
-      p[p$model == "L2" & p$parametrisation == "hour" & p$method == "tsum",],
-      p[p$model == "L3" & p$parametrisation == "hour" & p$method == "tsum",],
-      p[p$model == "L4" & p$parametrisation == "hour" & p$method == "tsum",],
-      p[p$model == "L5" & p$parametrisation == "hour" & p$method == "tsum",],
-      p[p$model == "L6" & p$parametrisation == "hour" & p$method == "tsum",],
-      p[p$model == "Pp" & p$parametrisation == "hour" & p$method == "tsum",],
-      p[p$model == "Ad" & p$parametrisation == "hour" & p$method == "tsum",]
+      p[p$model == "budswelling" & p$parametrisation == "quercus_robur_clone256_type1",],
+      p[p$model == "leafunfolding" & p$parametrisation == "quercus_robur_clone256_type1",],
+      p[p$model == "hatch" & p$parametrisation == "custers",],
+      p[p$model == "hatch" & p$parametrisation == "wagenhoff",],
+      p[p$model == "hatch" & p$parametrisation == "meurisse",],
+      p[p$model == "L2" & p$method == "tsum",],
+      p[p$model == "L3" & p$method == "tsum",],
+      p[p$model == "L4" & p$method == "tsum",],
+      p[p$model == "L5" & p$method == "tsum",],
+      p[p$model == "L6" & p$method == "tsum",],
+      p[p$model == "Pp" & p$method == "tsum",],
+      p[p$model == "Ad" & p$method == "tsum",]
     )
 
     # give parameter for daily mean min and max temperature data
@@ -112,16 +121,16 @@ parameter <- function(model = NULL, parametrisation = NULL, year = NULL, first =
     p <- rbind(
       p[p$model == "budswelling" & p$parametrisation == "quercus_robur_clone256_type1" ,],
       p[p$model == "leafunfolding" & p$parametrisation == "quercus_robur_clone256_type1",],
-      p[p$model == "hatch" & p$parametrisation == "custers" & p$method == "baskerville",],
-      p[p$model == "hatch" & p$parametrisation == "wagenhoff" & p$method == "baskerville",],
-      p[p$model == "hatch" & p$parametrisation == "meurisse" & p$method == "tsum",],
-      p[p$model == "L2" & p$parametrisation == "degreedays" & p$method == "baskerville",],
-      p[p$model == "L3" & p$parametrisation == "degreedays" & p$method == "baskerville",],
-      p[p$model == "L4" & p$parametrisation == "degreedays" & p$method == "baskerville",],
-      p[p$model == "L5" & p$parametrisation == "degreedays" & p$method == "baskerville",],
-      p[p$model == "L6" & p$parametrisation == "degreedays" & p$method == "baskerville",],
-      p[p$model == "Pp" & p$parametrisation == "degreedays" & p$method == "baskerville",],
-      p[p$model == "Ad" & p$parametrisation == "degreedays" & p$method == "baskerville",]
+      p[p$model == "hatch" & p$parametrisation == "custers",],
+      p[p$model == "hatch" & p$parametrisation == "wagenhoff",],
+      p[p$model == "hatch" & p$parametrisation == "meurisse",],
+      p[p$model == "L2" & p$method == "baskerville",],
+      p[p$model == "L3" & p$method == "baskerville",],
+      p[p$model == "L4" & p$method == "baskerville",],
+      p[p$model == "L5" & p$method == "baskerville",],
+      p[p$model == "L6" & p$method == "baskerville",],
+      p[p$model == "Pp" & p$method == "baskerville",],
+      p[p$model == "Ad" & p$method == "baskerville",]
     )
 
   } else if (!model %in% p$model) {
@@ -176,7 +185,15 @@ parameter <- function(model = NULL, parametrisation = NULL, year = NULL, first =
     return(x)
 
   }
+
   )
+
+  if (model %in% c("dailymean", "dailymeanminmax", "hour")) {
+
+    p$reftime <- model
+    p$year <- year
+
+  }
 
   return(p)
 

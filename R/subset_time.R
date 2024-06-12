@@ -1,6 +1,7 @@
 #' Subset data.frame/SpatRaster/List within from and end time
 #'
-#' @param x data.frame with time column, SpatRaster with time attribute or List of SpatRasters with same time attributes
+#' @param x data.frame with time column, SpatRaster with time attribute or List
+#' of SpatRasters with same time attributes
 #' @param from first day of subset
 #' @param to last day of subset
 #' @family Helper

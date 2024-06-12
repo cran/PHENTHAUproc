@@ -21,13 +21,16 @@ mortality(
 
 \item{def_hatch}{definition of hatch - character - either "first" or "mean"}
 
-\item{last}{If TRUE returns only the result for the last day. last row/layer for data.frame/SpatRaster}
+\item{last}{If TRUE returns only the result for the last day. last row/layer
+for data.frame/SpatRaster}
 }
 \value{
 SpatRaster with mortality in \%.
 }
 \description{
-Calculating the starvation-related mortality rate of L1 larvae, dependent on degree days from the first hatch to feeding start (bud swelling of the host tree \emph{Quercus robur}).
+Calculating the starvation-related mortality rate of L1 larvae,
+dependent on degree days from the first hatch to feeding start (bud swelling
+of the host tree \emph{Quercus robur}).
 All already available parameter settings can be shown with parameter().
 }
 \examples{

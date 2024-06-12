@@ -22,11 +22,13 @@ calc_sumefftemp(x, cf_temp, cf_start, cf_end, cf_limit, set, a, b)
 }}
 
 \item{cf_limit}{\itemize{
-\item numeric - threshold under which a day is defined as cold/frost day
+\item numeric - threshold under which a day is defined as
+cold/frost day
 }}
 
 \item{set}{\itemize{
-\item function - x is cold/frost days, a and b are parameter i.e. function (x, a, b) a + b*x
+\item function - x is cold/frost days, a and b are parameter i.e.
+function (x, a, b) a + b*x
 }}
 
 \item{a}{\itemize{

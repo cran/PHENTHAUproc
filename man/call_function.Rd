@@ -9,7 +9,8 @@ call_function(f, data, params)
 \arguments{
 \item{f}{function}
 
-\item{data}{SpatRaster list (tmean, tmax, tmin) - numeric - with time attribute}
+\item{data}{SpatRaster list (tmean, tmax, tmin) - numeric - with time
+attribute}
 
 \item{params}{parameter list}
 }

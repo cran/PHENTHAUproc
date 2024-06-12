@@ -3,7 +3,8 @@
 #' @param x SpatRaster - numeric - value is day of year
 #' @param from Date - ymd - first day of time attribute
 #' @param to Date - ymd - last day of time attribute
-#' @param by character - either "days", "weeks" or "months". Reduces return to one day per day/week/month
+#' @param by character - either "days", "weeks" or "months". Reduces return to
+#' one day per day/week/month
 #' @returns SpatRaster - logical - TRUE/FALSE before_doy/equal_after_doy
 #' @family SpatRaster transformation
 #' @keywords internal

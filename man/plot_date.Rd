@@ -7,17 +7,20 @@
 plot_date(x, breaks = NULL, ...)
 }
 \arguments{
-\item{x}{SpatRaster - numeric - value is serial number or SpatRaster - logical - with time attribute}
+\item{x}{SpatRaster - numeric - value is serial number or SpatRaster -
+logical - with time attribute}
 
 \item{breaks}{number of breaks in the legend - numeric}
 
-\item{...}{arguments for terra::plot function, except (type, breaks, col or plg)}
+\item{...}{arguments for terra::plot function, except (type, breaks, col or
+plg)}
 }
 \value{
 A plot of a phenological event by day with legend.
 }
 \description{
-A wrapper around terra::plot to show the time serial number as a character date in the legend.
+A wrapper around terra::plot to show the time serial number as
+a character date in the legend.
 }
 \examples{
 
@@ -28,7 +31,6 @@ plot_date(budswelling)
 \seealso{
 Other Plot: 
 \code{\link{plot_stages}()},
-\code{\link{plot_station_step}()},
-\code{\link{plot_station}()}
+\code{\link{plot_station_step}()}
 }
 \concept{Plot}

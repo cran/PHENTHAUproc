@@ -21,7 +21,8 @@ The function is vectorized.
 To use it with SpatRaster data see ?terra::lapp
 
 More Information about the Method itself:
-Baskerville, G.L. and P. Emin. 1969. Rapid estimation of heat accumulation from maximum and minimum temperature. Ecology 50:514-517.
+Baskerville, G.L. and P. Emin. 1969. Rapid estimation of heat accumulation
+from maximum and minimum temperature. Ecology 50:514-517.
 }
 \seealso{
 Other Temperature sum methods: 

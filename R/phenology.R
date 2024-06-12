@@ -1,16 +1,23 @@
 #' Calculate phenological events
 #'
-#' @param x SpatRaster list/dataframe (tmean, tmax, tmin) - numeric - with time attribute/date column
+#' @param x SpatRaster list/dataframe (tmean, tmax, tmin) - numeric - with time
+#' attribute/date column
 #' @param model name of model - character
 #' @param parametrisation name of parametrisation - character
 #' @param year year for prognosis - numeric
-#' @param hatch SpatRaster - logical - with time attribute TRUE/FALSE hatch/no_hatch
-#' @param return_date returns start of phenological event with time serial number
+#' @param hatch SpatRaster - logical - with time attribute TRUE/FALSE
+#' hatch/no_hatch
+#' @param return_date TRUE/FALSE defines output -> see value
 #' @param ... parameter to change default values. (i.e. ldt = 3.5)
-#' @returns If return_date is TRUE returns single layered SpatRaster with time serial number (first occurence of phenological event).
-#' If return_date is FALSE returns a one layer per day SpatRaster type logical with phenological event occurred/not TRUE/FALSE.
+#' @returns If return_date is TRUE returns single layered SpatRaster with time
+#' serial number (first occurence of phenological event).
+#' If return_date is FALSE returns a one layer per day SpatRaster type logical
+#' with phenological event occurred/not TRUE/FALSE.
 #' @family Main
-#' @description Using daily mean or min and max temperature data, the function calculates the temperature-dependent development stages of OPM or the bud stages (bud swelling and leaf unfolding) of its host tree \emph{Quercus robur}.
+#' @description Using daily mean or min and max temperature data, the function
+#' calculates the temperature-dependent development stages of OPM or the bud
+#' stages (bud swelling and leaf unfolding) of its host tree
+#' \emph{Quercus robur}.
 #'
 #' The default settings correspond to the model described by Halbig et al. 2024.
 #' Additional parametrizations are provided but have not yet been tested.
@@ -18,19 +25,31 @@
 #'  Halbig et al. 2024
 #'   It follows 4 different steps:
 #'   - a) Calculating and summing up cold days or frost days.
-#'   (Cold days are defined as days with a mean temperature below ldt (lower development threshold), while frost days are all days with a min temperature below ldt).
-#'      Hatch dependent development stages need a hatch raster (hatch happened 1 or not 0) for each day
+#'   (Cold days are defined as days with a mean temperature below ldt
+#'   (lower development threshold), while frost days are all days with a min
+#'   temperature below ldt).
+#'      Hatch dependent development stages need a hatch raster (hatch happened
+#'      1 or not 0) for each day
 #'   - b) Calculating degree days with the
-#'   single sine method of Baskerville & Emin, 1969 or simple summing up tmean temperatures over ldt.
+#'   single sine method of Baskerville & Emin, 1969 or simple summing up tmean
+#'   temperatures over ldt.
 #'   - c) Calculating the needed
 #'   sum of effective temperatures for the development stage
 #'   - d) Comparing degree days with the needed sum of effective temperatures
 #'
 #' @references
 #'
-#' Halbig et al. 2014: Halbig, P., Stelzer, A. S., Baier, P., Pennerstorfer, J., Delb, H., & Schopf, A. (2024). PHENTHAUproc–An early warning and decision support system for hazard assessment and control of oak processionary moth (Thaumetopoea processionea). Forest Ecology and Management, 552, 121525
-#' Baskerville & Emin 1969: Baskerville, G. L., & Emin, P. (1969). Rapid estimation of heat accumulation from maximum and minimum temperatures. Ecology, 50(3), 514-517. (<doi:10.2307/1933912>)
-#' Menzel 1997: Menzel, A. (1997). Phänologie von Waldbäumen unter sich ändernden Klimabedingungen: Auswertung der Beobachtungen in den internationalen phänologischen Gärten und Möglichkeiten der Modellierung von Phänodaten. Frank.
+#' Halbig et al. 2014: Halbig, P., Stelzer, A. S., Baier, P., Pennerstorfer,
+#' J., Delb, H., & Schopf, A. (2024). PHENTHAUproc–An early warning and decision
+#' support system for hazard assessment and control of oak processionary moth
+#' (Thaumetopoea processionea). Forest Ecology and Management, 552, 121525 \cr
+#' Baskerville & Emin 1969: Baskerville, G. L., & Emin, P. (1969). Rapid
+#' estimation of heat accumulation from maximum and minimum temperatures.
+#' Ecology, 50(3), 514-517. (<doi:10.2307/1933912>) \cr
+#' Menzel 1997: Menzel, A. (1997). Phänologie von Waldbäumen unter sich
+#' ändernden Klimabedingungen: Auswertung der Beobachtungen in den
+#' internationalen phänologischen Gärten und Möglichkeiten der Modellierung von
+#' Phänodaten. Frank. \cr
 #'
 #' @author Bachfischer Lorenz, Department of Forest Protection FVA (2024)
 #'   \email{lorenz.bachfischer@@posteo.de}
@@ -40,7 +59,10 @@
 #' srl <- load_test()
 #'
 #' # Calculating bud swelling for our raster example
-#' budswelling <- phenology(srl, "budswelling", "quercus_robur_clone256_type1", year = 2020)
+#' budswelling <- phenology(srl,
+#'                          model = "budswelling",
+#'                          parametrisation = "quercus_robur_clone256_type1",
+#'                          year = 2020)
 #'
 
 
@@ -53,40 +75,89 @@ phenology <- function(x,
                       ...
                       ) {
 
-  ### 1 check and convert input -------------
+  ### 01 set parameter ---------------------------------------------------------
 
-  is_hour <- NULL
+  year <- lubridate::year(max(get_time(x)))
 
-  if (all(c("date", "hour", "tmean") %in% names(x))) {
-    is_hour <- TRUE
-  } else if (all(c("tmean", "tmin", "tmax") %in% names(x))) {
-    is_hour <- FALSE
-  } else {
-    stop("names(x) not like needed. See details.")
-  }
 
-  # convert data.frame into list of SpatRaster (srl)
+  ### 02 check and transform input ---------------------------------------------
+
   if (methods::is(x, "data.frame")) {
 
-    x <- convert_df_to_srl(x[, names(x) != "hour"])
+    is_dataframe <- TRUE
 
-    is_dafr <- TRUE # if input is a dataframe, output should be too.
+    # for dailymean structure
+    if (identical(names(x), c("date", "tmean"))) {
 
-  } else is_dafr <- FALSE
+      if (is.null(params)) params <- parameter("dailymean", year = year)
 
-  # transfer hourly to daily minmeanmax (needed for most of the models)
-  if (is_hour) {
+      x <- convert_df_to_srl(x[,c("date", "tmean")])
 
-    x <- convert_hour_to_meanminmax(x)
+      # for hourly structure
+    } else if (identical(names(x), c("date", "hour", "tmean"))) {
+
+      if (is.null(params)) params <- parameter("hour", year = year)
+
+      x <- convert_df_to_srl(x[,c("date", "tmean")])
+
+      # for dailymeanminmax structure
+    } else if (all(names(x) %in% c("date", "tmean", "tmin", "tmax"))) {
+
+      if (is.null(params)) params <- parameter("dailymeanminmax", year = year)
+
+      x <- convert_df_to_srl(x[,c("date", "tmean", "tmin", "tmax")])
+
+    }
+
+  } else if (methods::is(x, "list")) {
+
+    is_dataframe <- FALSE
+
+    lapply(
+      x,
+      function(sr) {
+        if (!methods::is(sr, "SpatRaster")) stop("If calculating with list of SpatRaster all list objects have to be SpatRaster.")
+      }
+    )
+
+    if (all(names(x) %in% c("tmean", "tmin", "tmax"))) {
+
+      params <- parameter("dailymeanminmax", year = year)
+
+    } else stop("Name convention not correct. SpatRaster list needs three objects. These objects must be tmean, tmin and tmax!")
+
+
+  } else if (methods::is(x, "SpatRaster")) {
+
+    is_dataframe <- FALSE
+
+    params <- parameter("hour", year = year)
+
+  } else {
+
+    stop("x has to be a SpatRaster for hourly raster data, a list of SpatRaster with tmean, tmin and tmax for daily raster data or a data.frame for daily or hourly weather station data.")
 
   }
+
+  reftime <- params$reftime
+
+  # Convert hourly to daily mean, min and max temperatures (needed for most of
+  # the models)
+  if (reftime == "hour") {
+
+    x_hour <- list("tmean" = x)
+    x <- convert_hour_to_meanminmax(x_hour$tmean)
+
+  }
+
+
+  ### 03 set and check times ---------------------------------------------------
 
   # write the times with lubridate
   x <- lapply(x, function(y) {
-    terra::time(y) <- lubridate::as_date(get_time(y), tz = NULL)
+    terra::time(y) <- lubridate::ymd(terra::time(y), tz = NULL)
     return(y)
   })
-
 
   # check if days complete
   time <- get_time(x)
@@ -100,10 +171,10 @@ phenology <- function(x,
 
   missing <- sum(!sequence %in% time)
 
-  if (missing > 0) warning(missing, " missing days in sequence.")
+  if (missing > 0) warning(missing, " missing days in time sequence.")
 
 
-  ### 02 create parameter list ---------------------------
+  ### 03 create parameter list -------------------------------------------------
 
   params <- parameter(model = model,
                       parametrisation = parametrisation,
@@ -115,17 +186,17 @@ phenology <- function(x,
   params <- replace(params, names(my_params), my_params)
 
 
-  ### 03 calculate phenology ------------
+  ### 04 calculate phenology ---------------------------------------------------
 
   out <- calc_phenology(x, params)
 
   names(out) <- timename(out, model)
 
-  ### 04 create output -----------------
+  ### 05 create output ---------------------------------------------------------
 
   if (return_date) out <- convert_logical_to_time(out)
 
-  if (is_dafr) {
+  if (is_dataframe) {
 
     out <- convert_sr_to_cvec(out)
     names(out) <- model

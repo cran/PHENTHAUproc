@@ -13,7 +13,8 @@ convert_doy_to_logical(x, from, to, by = "days")
 
 \item{to}{Date - ymd - last day of time attribute}
 
-\item{by}{character - either "days", "weeks" or "months". Reduces return to one day per day/week/month}
+\item{by}{character - either "days", "weeks" or "months". Reduces return to
+one day per day/week/month}
 }
 \value{
 SpatRaster - logical - TRUE/FALSE before_doy/equal_after_doy

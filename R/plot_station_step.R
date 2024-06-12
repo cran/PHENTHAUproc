@@ -4,6 +4,7 @@
 #' @returns A plot showing local PHENTHAUproc results in a step plot.
 #' @description Plots the development stages of OPM.
 #' @importFrom rlang .data
+#' @importFrom stats na.omit
 #' @family Plot
 #' @export
 #' @examples
@@ -69,16 +70,15 @@ plot_station_step <- function(x) {
     ) +
 
     # build box for ppa_biocide
-    ggplot2::geom_rect(
-      ggplot2::aes(
+    ggplot2::annotate(
+        geom = "rect",
         xmin = bio_start,
         xmax = bio_end,
         ymin = 0.25,
         ymax = 0.75,
-        alpha = 0.5),
-      colour = "green",
-      fill = "green",
-      show.legend = FALSE
+        alpha = 0.5,
+      color = "green",
+      fill = "green"
     ) +
 
     # set x and y axis

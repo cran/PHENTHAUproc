@@ -1,10 +1,13 @@
 #' Plot SpatRaster with date serial number/time attribute
 #'
-#' @param x SpatRaster - numeric - value is serial number or SpatRaster - logical - with time attribute
+#' @param x SpatRaster - numeric - value is serial number or SpatRaster -
+#' logical - with time attribute
 #' @param breaks number of breaks in the legend - numeric
-#' @param ... arguments for terra::plot function, except (type, breaks, col or plg)
+#' @param ... arguments for terra::plot function, except (type, breaks, col or
+#' plg)
 #' @returns A plot of a phenological event by day with legend.
-#' @description A wrapper around terra::plot to show the time serial number as a character date in the legend.
+#' @description A wrapper around terra::plot to show the time serial number as
+#' a character date in the legend.
 #' @family Plot
 #' @export
 #' @examples

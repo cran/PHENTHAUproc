@@ -25,7 +25,6 @@ plot_station_step(fr)
 \seealso{
 Other Plot: 
 \code{\link{plot_date}()},
-\code{\link{plot_stages}()},
-\code{\link{plot_station}()}
+\code{\link{plot_stages}()}
 }
 \concept{Plot}

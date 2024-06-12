@@ -1,6 +1,7 @@
 #' Get legend for PHENTHAUproc models
 #'
-#' @param x legend name - character - Available legends: "stages", "mortality", "ppa_biocide"
+#' @param x legend name - character - Available legends: "stages", "mortality",
+#' "ppa_biocide"
 #' @returns dataframe with ID, category and colors
 #' @family Main
 #' @export

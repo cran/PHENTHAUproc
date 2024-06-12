@@ -11,7 +11,8 @@ A data frame with 29232 rows and 3 variables
 https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/hourly/air_temperature/historical/
 }
 \description{
-A dataset containing hourly temperatures for Freiburg from 2019-09-01 to 2022-12-31.
+A dataset containing hourly temperatures for Freiburg from 2019-09-01 to
+2022-12-31.
 Downloaded from opendata.dwd.de and preprocessed.
 }
 \details{

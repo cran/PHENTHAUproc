@@ -10,10 +10,12 @@ calc_last(x)
 \item{x}{SpatRaster - logical - with time attribute}
 }
 \value{
-SpatRaster with time serial number (origin = lubridate::origin) of last TRUE layer.
+SpatRaster with time serial number (origin = lubridate::origin) of
+last TRUE layer.
 }
 \description{
-Takes multiple logical SpatRasters with time attribute and returns SpatRaster with time serial number of last TRUE layer time.
+Takes multiple logical SpatRasters with time attribute and
+returns SpatRaster with time serial number of last TRUE layer time.
 }
 \seealso{
 Other Calculation: 

@@ -5,17 +5,19 @@
 #' @returns SpatRaster - logical - with event occurred/not TRUE/FALSE
 #' @family Models
 #' @keywords internal
-#' @description This function is checking the dependencies of the model and dependent on them:
+#' @description This function is checking the dependencies of the model and
+#' dependent on them:
 #'
-#' 1 Calculate the needed sum of effective (SET) temperatures for the phenological event to happen
+#' 1 Calculate the needed sum of effective (SET) temperatures for the
+#' phenological event to happen
 #' 2 Calculate the summed degree days (depending on hatch or not)
-#' 3 Check if the summed degree days have reached the needed sum of effective temperatures
+#' 3 Check if the summed degree days have reached the needed sum of effective
+#' temperatures
 
 calc_phenology <- function(x,
                            params) {
 
-
-  ### 00 check parameter list for data input dependencies -----------------------------
+  ### 01 check parameter list for data input dependencies ----------------------
 
   check_data_with_params(x, params)
 
@@ -23,8 +25,7 @@ calc_phenology <- function(x,
   cf_dependent <- params$cf_dependent
   hatch_dependent <- params$hatch_dependent
 
-
-  ### 01 calculate sum of effective temperatures ---------------------------
+  ### 02 calculate sum of effective temperatures -------------------------------
 
   if (cf_dependent) {
 
@@ -40,8 +41,7 @@ calc_phenology <- function(x,
 
   }
 
-
-  ### 2 calculate degree days --------------------
+  ### 03 calculate degree days -------------------------------------------------
 
   args <- get_formalArgs(params, calc_degreedays)
 
@@ -53,8 +53,7 @@ calc_phenology <- function(x,
 
   degreedays <- do.call(calc_degreedays, args)
 
-
-  ### 3 check if phenological event arrived -----------------
+  ### 04 check if phenological event happened ----------------------------------
 
   event <- terra::ifel(degreedays > sumefftemp, TRUE, FALSE)
 
@@ -63,9 +62,6 @@ calc_phenology <- function(x,
 
   # create layernames
   names(event) <- timename(event, params$model)
-
-
-  ### 4 return ---------------------------------------
 
   return(event)
 

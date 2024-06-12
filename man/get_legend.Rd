@@ -7,7 +7,8 @@
 get_legend(x = "stages")
 }
 \arguments{
-\item{x}{legend name - character - Available legends: "stages", "mortality", "ppa_biocide"}
+\item{x}{legend name - character - Available legends: "stages", "mortality",
+"ppa_biocide"}
 }
 \value{
 dataframe with ID, category and colors

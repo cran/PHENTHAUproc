@@ -11,7 +11,8 @@ A data frame with 396 rows and 4 variables
 https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/daily/kl/historical/
 }
 \description{
-A dataset containing daily mean, max and min temperatures for Freiburg from 2019-09-01 to 2020-09-30.
+A dataset containing daily mean, max and min temperatures for Freiburg from
+2019-09-01 to 2020-09-30.
 Downloaded from opendata.dwd.de and preprocessed.
 }
 \details{

@@ -4,7 +4,8 @@
 #' @returns SpatRaster - logical - with time attribute
 #' @family Calculation
 #' @keywords internal
-#' @description Takes multiple logical SpatRasters with time attribute and returns SpatRaster with common time and TRUE if any SpatRaster is TRUE.
+#' @description Takes multiple logical SpatRasters with time attribute and
+#' returns SpatRaster with common time and TRUE if any SpatRaster is TRUE.
 
 calc_first <- function(...) {
 

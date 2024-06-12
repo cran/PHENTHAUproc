@@ -1,9 +1,11 @@
 #' Calculate mortality
 #'
-#' @param x SpatRaster list / dataframe with temperature data and time attribute/column
+#' @param x SpatRaster list / dataframe with temperature data and time
+#' attribute/column
 #' @param budswelling SpatRaster - logical - T/F budswelling/no_budswelling
 #' @param hatch SpatRaster - logical - T/F hatch/no_hatch
-#' @param mot mortality threshold - numeric - is used as lower development threshold calculating degree days
+#' @param mot mortality threshold - numeric - is used as lower development
+#' threshold calculating degree days
 #' @returns SpatRaster of starving related mortality in %.
 #' @family Models
 #' @keywords internal

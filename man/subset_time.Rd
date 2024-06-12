@@ -7,7 +7,8 @@
 subset_time(x, from, to)
 }
 \arguments{
-\item{x}{data.frame with time column, SpatRaster with time attribute or List of SpatRasters with same time attributes}
+\item{x}{data.frame with time column, SpatRaster with time attribute or List
+of SpatRasters with same time attributes}
 
 \item{from}{first day of subset}
 

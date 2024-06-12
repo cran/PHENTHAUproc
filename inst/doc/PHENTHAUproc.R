@@ -11,7 +11,6 @@ library(PHENTHAUproc)
 library(terra)
 library(tidyterra)
 library(ggplot2)
-library(geomtextpath)
 library(grDevices)
 
 ## ----echo = T, message = F----------------------------------------------------
@@ -26,29 +25,29 @@ fva <-  load_test("SpatRaster")
 fva
 
 ## ----echo = T, message = F----------------------------------------------------
-# phenthau chooses parameter sets dependent on the input
-local <- phenthau(freiburg)
+# The parameter default method is "dailymeanminmax". If you want to calculate with hourly data, you have to change the parameter manually.
 regional <- phenthau(fva)
+local <- phenthau(freiburg, params = parameter("hour", year = 2020))
 
-# we can also preset the parameters.
-params <- parameter("dailymeanminmax", year = 2020) # returns parameter set for daily mean min max temperatures
+# we can create a parameter list
+params <- parameter("dailymeanminmax", year = 2020)
 
-# and change them
+# and change single parameter
 params$budswelling$ldt <- 5 # change lower development threshold for budswelling from Default to 5
+
 regional_manipulated <- phenthau(fva, params = params)
 
 rm(params, regional_manipulated)
 
 ## ----echo = T, out.width = "100%", fig.dim = c(8, 6), message = T-------------
 plot_station_step(local)
-plot_station(local, main = "PHENTHAUproc\nFreiburg")
 
 ## ----echo = T, out.width = "50%", fig.align = "center", fig.cap = "OPM larval stages 5. June 2020", message = F----
 stages <- regional$stages
 
 plot_stages(stages,
             time = "2020-06-05",
-            main = "OPM larval stages - 5. June 2020",
+            main = "OPM 5. June 2020",
             axes = F,
             box = T)
 
